@@ -47,28 +47,24 @@ pipeline {
             }
         }
 
-        stage('Code Analysis (Java 8)') {
-            steps {
-                sh '''
-                    docker exec java8-analyzer bash -c "
-                        rm -rf /app &&
-                        mkdir /app
-                    "
-                    docker cp . java8-analyzer:/app
-                    docker exec java8-analyzer bash -c "
-                        cd /app &&
-                        ./mvnw sonar:sonar \
-                            -Dsonar.host.url=${SONAR_HOST} \
-                            -Dsonar.login=admin \
-                            -Dsonar.password=admin \
-                            || mvn sonar:sonar \
-                            -Dsonar.host.url=${SONAR_HOST} \
-                            -Dsonar.login=admin \
-                            -Dsonar.password=admin
-                    "
-                '''
-            }
+       stage('Code Analysis (Java 8)') {
+        steps {
+            sh '''
+                docker exec java11-tester bash -c "
+                    rm -rf /app &&
+                    mkdir /app
+                "
+                docker cp . java11-tester:/app
+                docker exec java11-tester bash -c "
+                    cd /app &&
+                    mvn sonar:sonar \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.login=admin \
+                        -Dsonar.password=admin
+                "
+            '''
         }
+    }
 
     }
 
