@@ -55,12 +55,11 @@ pipeline {
                     mkdir /app
                 "
                 docker cp . java11-tester:/app
-                docker exec java11-tester bash -c "
+               docker exec java11-tester bash -c "
                     cd /app &&
                     mvn sonar:sonar \
                         -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=admin \
-                        -Dsonar.password=admin
+                        -Dsonar.login=squ_c57711dc4917130a410c415bb93f432d9456348b
                 "
             '''
         }
