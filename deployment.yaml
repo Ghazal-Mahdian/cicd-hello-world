@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: java-app
-        image: YOUR_DOCKERHUB_USERNAME/cicd-hello-world:latest
+        image: ghazalcsudh/cicd-hello-world:latest
         ports:
         - containerPort: 8080
 ---
