@@ -85,10 +85,19 @@ pipeline {
         }
     }
     
-  stage('Deploy to Kubernetes') {
+    stage('Deploy to Kubernetes') {
         steps {
             withCredentials([file(credentialsId: 'kubeconfig-secret', variable: 'KUBECONFIG_FILE')]) {
+                // Use the --insecure-skip-tls-verify flag to bypass the certificate name error
                 sh 'export KUBECONFIG=${KUBECONFIG_FILE} && kubectl apply -f deployment.yaml --insecure-skip-tls-verify'
+            }
+        }
+    }
+    
+    stage('Check Pods') {
+        steps {
+            withCredentials([file(credentialsId: 'kubeconfig-secret', variable: 'KUBECONFIG_FILE')]) {
+                sh 'export KUBECONFIG=${KUBECONFIG_FILE} && kubectl get pods --insecure-skip-tls-verify'
             }
         }
     }
