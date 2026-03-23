@@ -79,7 +79,7 @@ pipeline {
     stage('Push to Docker Hub') {
         steps {
             sh '''
-                echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+                echo "g2H;EB%+ujAdtj9" | docker login -u "ghazalcsudh" --password-stdin
                 docker push ghazalcsudh/cicd-hello-world:latest
             '''
         }
