@@ -87,10 +87,10 @@ pipeline {
     
     stage('Deploy to Kubernetes') {
         steps {
-            sh '''
-                kubectl apply -f deployment.yaml
-                kubectl rollout status deployment/java-app
-            '''
+            withCredentials([file(credentialsId: 'kubeconfig-secret', variable: 'KUBECONFIG_FILE')]) {
+                // Point kubectl to the temporary secret file
+                sh "KUBECONFIG=${KUBECONFIG_FILE} kubectl apply -f deployment.yaml"
+            }
         }
     }
 
