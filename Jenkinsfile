@@ -4,7 +4,11 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'your-dockerhub-username/cicd-hello-world:latest'
         SONAR_HOST = 'http://sonarqube:9000'
+        DOCKER_USERNAME = credentials('ghazalcsudh')
+        DOCKER_PASSWORD = credentials('g2H;EB%+ujAdtj9')
+        SONAR_HOST = 'http://sonarqube:9000'
     }
+  
 
     stages {
 
