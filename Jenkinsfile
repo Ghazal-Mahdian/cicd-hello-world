@@ -85,11 +85,11 @@ pipeline {
         }
     }
     
-    stage('Deploy to Kubernetes') {
+   stage('Deploy to Kubernetes') {
         steps {
             withCredentials([file(credentialsId: 'kubeconfig-secret', variable: 'KUBECONFIG_FILE')]) {
-                // Point kubectl to the temporary secret file
-                sh "KUBECONFIG=${KUBECONFIG_FILE} kubectl apply -f deployment.yaml"
+                // Use single quotes ('') so the shell environment reads the variable
+                sh 'export KUBECONFIG=${KUBECONFIG_FILE} && kubectl apply -f deployment.yaml'
             }
         }
     }
