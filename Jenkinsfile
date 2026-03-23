@@ -6,7 +6,6 @@ pipeline {
         SONAR_HOST = 'http://sonarqube:9000'
         DOCKER_USERNAME = credentials('ghazalcsudh')
         DOCKER_PASSWORD = credentials('g2H;EB%+ujAdtj9')
-        SONAR_HOST = 'http://sonarqube:9000'
     }
   
 
