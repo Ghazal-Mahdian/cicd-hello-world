@@ -15,6 +15,7 @@ spec:
       containers:
       - name: java-app
         image: ghazalcsudh/cicd-hello-world:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
 ---
