@@ -65,6 +65,32 @@ pipeline {
         }
     }
 
+        stage('Build Docker Image') {
+        steps {
+            sh '''
+                docker build -t ghazalcsudh/cicd-hello-world:latest .
+            '''
+        }
+    }
+    
+    stage('Push to Docker Hub') {
+        steps {
+            sh '''
+                echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+                docker push ghazalcsudh/cicd-hello-world:latest
+            '''
+        }
+    }
+    
+    stage('Deploy to Kubernetes') {
+        steps {
+            sh '''
+                kubectl apply -f deployment.yaml
+                kubectl rollout status deployment/java-app
+            '''
+        }
+    }
+
     }
 
     post {
