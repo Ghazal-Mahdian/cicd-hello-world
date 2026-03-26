@@ -85,10 +85,16 @@ pipeline {
         }
     }
     
-    stage('Deploy to Kubernetes') {
+    stage('Deploy with Helm') {
         steps {
             withCredentials([file(credentialsId: 'kubeconfig-secret', variable: 'KUBECONFIG_FILE')]) {
-                sh 'export KUBECONFIG=${KUBECONFIG_FILE} && kubectl apply -f deployment.yaml --insecure-skip-tls-verify'
+                sh '''
+                    export KUBECONFIG=${KUBECONFIG_FILE}
+                    # This command says: "Install this app, or upgrade it if it's already there"
+                    helm upgrade --install my-release ./helm/hello-world \
+                        --set image.tag=latest \
+                        --kube-insecure-skip-tls-verify
+                '''
             }
         }
     }

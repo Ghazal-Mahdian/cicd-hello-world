@@ -1,0 +1,8 @@
+replicaCount: 2
+image:
+  repository: ghazalcsudh/cicd-hello-world
+  tag: latest
+  pullPolicy: Always
+service:
+  type: NodePort
+  port: 8080
