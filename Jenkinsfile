@@ -89,7 +89,7 @@ pipeline {
         agent {
             docker {
                 image 'alpine/helm:latest'
-                args '-v /var/run/docker.sock:/var/run/docker.sock --entrypoint=''' 
+                args "-v /var/run/docker.sock:/var/run/docker.sock --entrypoint=''" 
             }
         }
         steps {
