@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-world-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Ghazal-Mahdian/cicd-hello-world.git
+    targetRevision: HEAD
+    path: helm/hello-world  # This points to your Helm folder
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true      # Automatically delete old resources
+      selfHeal: true   # If someone manually changes K8s, fix it back!
+
