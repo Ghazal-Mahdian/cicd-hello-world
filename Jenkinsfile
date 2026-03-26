@@ -89,15 +89,13 @@ pipeline {
         agent {
             docker {
                 image 'alpine/helm:latest'
-                // This allows the agent to talk to your local Minikube/K8s
-                args '-v /var/run/docker.sock:/var/run/docker.sock' 
+                args '-v /var/run/docker.sock:/var/run/docker.sock --entrypoint=''' 
             }
         }
         steps {
             withCredentials([file(credentialsId: 'kubeconfig-secret', variable: 'KUBECONFIG_FILE')]) {
                 sh '''
                     export KUBECONFIG=${KUBECONFIG_FILE}
-                    # Now 'helm' will work because this container HAS it!
                     helm upgrade --install my-release ./helm/hello-world \
                         --set image.tag=latest \
                         --kube-insecure-skip-tls-verify
