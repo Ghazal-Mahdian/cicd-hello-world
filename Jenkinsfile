@@ -77,18 +77,18 @@ pipeline {
     }
 
    stage('Security Scan (Trivy)') {
-            agent {
-                docker {
-                    image 'ghcr.io/aquasecurity/trivy:latest'
-                    args "-v /var/run/docker.sock:/var/run/docker.sock --entrypoint=''"
-                }
-            }
-            steps {
-                script {
-                    sh "trivy image --severity HIGH,CRITICAL ghazalcsudh/cicd-hello-world:latest"
-                }
+        agent {
+            docker {
+                image 'ghcr.io/aquasecurity/trivy:latest'
+                args "-u 0 -v /var/run/docker.sock:/var/run/docker.sock --entrypoint=''"
             }
         }
+        steps {
+            script {
+                sh "trivy image --cache-dir .trivycache --severity HIGH,CRITICAL ghazalcsudh/cicd-hello-world:latest"
+            }
+        }
+    }
     
     stage('Push to Docker Hub') {
         steps {
